@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sales Mastery — M Rafli Febriansyah</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-primary: #0a0a0f;
+  --bg-card: #111118;
+  --bg-card-hover: #16161f;
+  --accent: #f59e0b;
+  --accent-glow: rgba(245, 158, 11, 0.15);
+  --accent-bright: #fbbf24;
+  --text-primary: #f1f1f4;
+  --text-secondary: #9d9db5;
+  --text-muted: #5a5a72;
+  --border: rgba(255,255,255,0.06);
+  --gradient-1: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+  --gradient-2: linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 100%);
+  --gradient-3: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) var(--bg-primary);
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.slide {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 80px;
+  position: relative;
+  border-bottom: 1px solid var(--border);
+}
+@media (max-width: 768px) { .slide { padding: 40px 24px; } }
+
+/* NAV */
+.nav { position: fixed; right: 30px; top: 50%; transform: translateY(-50%); z-index: 100; display: flex; flex-direction: column; gap: 10px; }
+.nav-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--text-muted); border: none; cursor: pointer; transition: all 0.3s; position: relative; }
+.nav-dot.active { background: var(--accent); box-shadow: 0 0 12px var(--accent-glow); transform: scale(1.3); }
+.nav-dot:hover { background: var(--accent-bright); }
+.nav-dot .tooltip { position: absolute; right: 24px; top: 50%; transform: translateY(-50%); background: var(--bg-card); color: var(--text-primary); padding: 6px 14px; border-radius: 6px; font-size: 12px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s; border: 1px solid var(--border); }
+.nav-dot:hover .tooltip { opacity: 1; }
+
+.progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: var(--gradient-1); z-index: 200; transition: width 0.3s ease; }
+.slide-counter { position: fixed; bottom: 30px; right: 30px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--text-muted); z-index: 100; letter-spacing: 2px; }
+
+/* TYPOGRAPHY */
+.hero-title { font-family: 'Playfair Display', serif; font-size: clamp(3rem, 7vw, 6rem); font-weight: 800; line-height: 1.05; letter-spacing: -2px; margin-bottom: 24px; }
+.hero-title .accent { background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.section-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 4px; color: var(--accent); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+.section-label::before { content: ''; width: 30px; height: 1px; background: var(--accent); }
+.section-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4.5vw, 3.5rem); font-weight: 800; line-height: 1.15; margin-bottom: 20px; letter-spacing: -1px; }
+.section-subtitle { font-size: 1.15rem; color: var(--text-secondary); max-width: 600px; font-weight: 300; }
+
+/* FRAMEWORK CARDS */
+.framework-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-top: 40px; }
+.fw-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 32px 28px; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; }
+.fw-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gradient-1); opacity: 0; transition: opacity 0.3s; }
+.fw-card:hover { background: var(--bg-card-hover); transform: translateY(-4px); border-color: rgba(245, 158, 11, 0.2); }
+.fw-card:hover::before { opacity: 1; }
+.fw-card .letter { font-family: 'Playfair Display', serif; font-size: 3.5rem; font-weight: 800; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; margin-bottom: 12px; }
+.fw-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; }
+.fw-card p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; }
+
+/* BANT CARDS */
+.bant-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-top: 40px; }
+.bant-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 32px 28px; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; }
+.bant-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gradient-2); opacity: 0; transition: opacity 0.3s; }
+.bant-card:hover { background: var(--bg-card-hover); transform: translateY(-4px); border-color: rgba(14, 165, 233, 0.2); }
+.bant-card:hover::before { opacity: 1; }
+.bant-card .letter { font-family: 'Playfair Display', serif; font-size: 3.5rem; font-weight: 800; background: var(--gradient-2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; margin-bottom: 12px; }
+.bant-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; }
+.bant-card p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; }
+.bant-card .question { margin-top: 14px; padding: 10px 14px; background: rgba(14, 165, 233, 0.06); border-left: 3px solid #0ea5e9; border-radius: 0 8px 8px 0; font-size: 0.85rem; color: #7dd3fc; font-style: italic; }
+
+/* COMPARISON */
+.compare-container { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 40px; max-width: 900px; }
+@media (max-width: 640px) { .compare-container { grid-template-columns: 1fr; } }
+.compare-box { padding: 36px 30px; border-radius: 16px; border: 1px solid var(--border); }
+.compare-box.bad { background: rgba(239, 68, 68, 0.04); border-color: rgba(239, 68, 68, 0.15); }
+.compare-box.good { background: rgba(16, 185, 129, 0.04); border-color: rgba(16, 185, 129, 0.15); }
+.compare-box .icon { font-size: 2rem; margin-bottom: 16px; }
+.compare-box h3 { font-size: 1.2rem; margin-bottom: 16px; font-weight: 700; }
+.compare-box.bad h3 { color: #f87171; }
+.compare-box.good h3 { color: #34d399; }
+.compare-item { padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 0.95rem; color: var(--text-secondary); display: flex; align-items: flex-start; gap: 10px; }
+.compare-item:last-child { border-bottom: none; }
+.compare-item .marker { flex-shrink: 0; font-size: 0.8rem; margin-top: 3px; }
+
+/* SKILL CARDS */
+.skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 40px; }
+.skill-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 32px 28px; transition: all 0.4s; position: relative; }
+.skill-card:hover { background: var(--bg-card-hover); transform: translateY(-3px); }
+.skill-card .num { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--accent); margin-bottom: 14px; letter-spacing: 2px; }
+.skill-card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 12px; }
+.skill-card p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; }
+.skill-card .stat { margin-top: 18px; padding: 12px 16px; background: rgba(245, 158, 11, 0.06); border-radius: 10px; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--accent-bright); }
+
+/* CHAT SIM */
+.chat-demo { max-width: 500px; margin-top: 40px; display: flex; flex-direction: column; gap: 12px; }
+.chat-msg { max-width: 85%; padding: 14px 18px; border-radius: 18px; font-size: 0.9rem; line-height: 1.5; animation: fadeInUp 0.5s ease both; }
+.chat-msg.customer { background: var(--bg-card); border: 1px solid var(--border); align-self: flex-start; border-bottom-left-radius: 4px; color: var(--text-secondary); }
+.chat-msg.sales { background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.2); align-self: flex-end; border-bottom-right-radius: 4px; }
+.chat-label { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 4px; }
+
+/* QUOTE */
+.quote-block { margin-top: 50px; padding: 40px; border-left: 3px solid var(--accent); max-width: 700px; }
+.quote-block .text { font-family: 'Playfair Display', serif; font-size: clamp(1.3rem, 2.5vw, 1.8rem); font-style: italic; line-height: 1.5; color: var(--text-primary); margin-bottom: 16px; }
+.quote-block .author { font-size: 0.9rem; color: var(--text-muted); }
+
+/* TIMELINE */
+.timeline { margin-top: 40px; max-width: 700px; }
+.timeline-item { display: flex; gap: 24px; padding-bottom: 32px; position: relative; }
+.timeline-item:not(:last-child)::after { content: ''; position: absolute; left: 19px; top: 44px; bottom: 0; width: 1px; background: var(--border); }
+.timeline-marker { width: 40px; height: 40px; border-radius: 50%; background: var(--bg-card); border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; font-weight: 600; color: var(--accent); flex-shrink: 0; }
+.timeline-content h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 6px; }
+.timeline-content p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; }
+
+/* TAKEAWAYS */
+.takeaway-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 40px; }
+.takeaway-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 24px 22px; text-align: center; transition: all 0.3s; }
+.takeaway-item:hover { transform: translateY(-3px); border-color: rgba(245, 158, 11, 0.2); }
+.takeaway-item .emoji { font-size: 2rem; margin-bottom: 12px; }
+.takeaway-item h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; }
+.takeaway-item p { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5; }
+
+/* CTA */
+.cta-box { margin-top: 50px; padding: 40px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; text-align: center; max-width: 600px; }
+.cta-box h3 { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 16px; }
+.cta-box p { color: var(--text-secondary); margin-bottom: 24px; }
+.social-links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+.social-link { padding: 10px 20px; border: 1px solid var(--border); border-radius: 10px; color: var(--text-secondary); text-decoration: none; font-size: 0.88rem; font-weight: 500; transition: all 0.3s; display: flex; align-items: center; gap: 8px; }
+.social-link:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-glow); }
+
+/* BIG STAT */
+.big-stat { display: flex; gap: 48px; margin-top: 40px; flex-wrap: wrap; }
+.stat-item .number { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1.1; }
+.stat-item .label { font-size: 0.85rem; color: var(--text-muted); margin-top: 6px; }
+
+/* SOURCE STRIP */
+.source-strip {
+  margin-top: 32px;
+  padding: 16px 20px;
+  background: rgba(96, 165, 250, 0.04);
+  border: 1px solid rgba(96, 165, 250, 0.1);
+  border-radius: 12px;
+  max-width: 800px;
+}
+.source-strip .src-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #60a5fa;
+  margin-bottom: 8px;
+}
+.source-strip a {
+  color: #7dd3fc;
+  text-decoration: none;
+  font-size: 0.78rem;
+  line-height: 2;
+  display: inline-block;
+  margin-right: 6px;
+  transition: color 0.2s;
+}
+.source-strip a:hover { color: #bae6fd; text-decoration: underline; }
+.source-strip a::after { content: ' ↗'; font-size: 0.65rem; }
+.source-strip .src-note {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-top: 6px;
+  font-style: italic;
+}
+
+/* GLOW */
+.glow-orb { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.08; pointer-events: none; }
+.glow-amber { background: #f59e0b; width: 400px; height: 400px; }
+.glow-blue { background: #0ea5e9; width: 350px; height: 350px; }
+
+/* ANIM */
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+.animate-in { opacity: 0; transform: translateY(30px); transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1); }
+.animate-in.visible { opacity: 1; transform: translateY(0); }
+
+@media print {
+  .nav, .progress-bar, .slide-counter { display: none; }
+  .slide { min-height: auto; page-break-after: always; padding: 40px; }
+  body::before { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+<nav class="nav" id="navDots"></nav>
+<div class="slide-counter" id="slideCounter">01 / 10</div>
+
+<!-- ═══ SLIDE 1: COVER ═══ -->
+<section class="slide" id="slide-1">
+  <div class="glow-orb glow-amber" style="top: -100px; right: -100px;"></div>
+  <div class="animate-in">
+    <div class="section-label">Creya Working Space — 2026</div>
+    <h1 class="hero-title">The Art of<br><span class="accent">Selling Smart</span></h1>
+    <p class="section-subtitle" style="max-width: 520px;">Framework, mindset, dan tactical skill yang membedakan top performer dari yang biasa-biasa aja.</p>
+    <div class="big-stat">
+      <div class="stat-item"><div class="number">2hrs</div><div class="label">Deep Session</div></div>
+      <div class="stat-item"><div class="number">5</div><div class="label">Core Modules</div></div>
+    </div>
+    <div style="margin-top: 48px; display: flex; align-items: center; gap: 16px;">
+      <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--gradient-1); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem;">R</div>
+      <div>
+        <div style="font-weight: 600;">M Rafli Febriansyah</div>
+        <div style="font-size: 0.82rem; color: var(--text-muted);">Sales Leader · Area Manager · AI Enthusiast</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SLIDE 2: WHY THIS MATTERS ═══ -->
+<section class="slide" id="slide-2">
+  <div class="glow-orb glow-blue" style="bottom: -80px; left: -80px;"></div>
+  <div class="animate-in">
+    <div class="section-label">Module 00 — Reality Check</div>
+    <h2 class="section-title">Kenapa 80% Sales<br>Gagal Closing?</h2>
+    <p class="section-subtitle">Bukan karena produknya jelek. Bukan karena harganya mahal. Tapi karena pendekatannya salah dari awal.</p>
+    <div class="big-stat" style="margin-top: 50px;">
+      <div class="stat-item">
+        <div class="number">80%</div>
+        <div class="label">Sales butuh 5-12x follow-up, tapi 92% sales berhenti setelah 4 percobaan</div>
+      </div>
+      <div class="stat-item">
+        <div class="number">78%</div>
+        <div class="label">Pembeli memilih brand yang merespons duluan</div>
+      </div>
+    </div>
+    <div class="quote-block">
+      <div class="text">"Orang nggak beli karena mereka paham produk lu. Mereka beli karena merasa dipahami."</div>
+      <div class="author">— The Psychology of Selling</div>
+    </div>
+    <div class="source-strip">
+      <div class="src-label">📊 Data Sources</div>
+      <a href="https://spotio.com/blog/sales-statistics/" target="_blank">SPOTIO — 140+ Sales Statistics 2026</a>
+      <a href="https://www.peaksalesrecruiting.com/blog/sales-follow-up-statistics/" target="_blank">Peak Sales Recruiting</a>
+      <a href="https://www.flowlu.com/blog/productivity/sales-statistics/" target="_blank">Flowlu — 45 Sales Stats 2026</a>
+      <a href="https://martal.ca/speed-to-lead-lb/" target="_blank">Martal — Speed to Lead</a>
+      <a href="https://rep.ai/blog/lead-response" target="_blank">Rep.ai — Lead Response Stats</a>
+      <div class="src-note">80% follow-up stat: GrowthList data, dikonfirmasi multiple sources. 78% first responder: Vendasta/Ricochet360 research.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SLIDE 3: AIDA ═══ -->
+<section class="slide" id="slide-3">
+  <div class="glow-orb glow-amber" style="top: 50%; right: -150px;"></div>
+  <div class="animate-in">
+    <div class="section-label">Module 01 — Framework</div>
+    <h2 class="section-title">A.I.D.A</h2>
+    <p class="section-subtitle">Setiap closing yang sukses selalu melewati 4 tahap ini — sadar atau nggak.</p>
+    <div class="framework-grid">
+      <div class="fw-card">
+        <div class="letter">A</div>
+        <h3>Awareness</h3>
+        <p>Tangkap perhatian. Di dunia online, lu punya <strong>3 detik</strong> sebelum mereka scroll lewat. Hook yang kuat = pintu masuk.</p>
+      </div>
+      <div class="fw-card">
+        <div class="letter">I</div>
+        <h3>Interest</h3>
+        <p>Bangun rasa penasaran. Kasih value, bukan langsung jualan. Edukasi mereka sampai mereka bilang <em>"Gue butuh ini."</em></p>
+      </div>
+      <div class="fw-card">
+        <div class="letter">D</div>
+        <h3>Decision</h3>
+        <p>Bantu mereka ambil keputusan. Social proof, testimoni, comparison — buang semua keraguan mereka.</p>
+      </div>
+      <div class="fw-card">
+        <div class="letter">A</div>
+        <h3>Action</h3>
+        <p>Dorong dengan CTA yang jelas. Jangan biarkan mereka "pikir-pikir dulu" tanpa next step yang konkret.</p>
+      </div>
+    </div>
+    <div class="source-strip">
+      <div class="src-label">📚 Framework Origin</div>
+      <a href="https://www.oxfordreference.com/display/10.1093/oi/authority.20110803095432783" target="_blank">Oxford Reference — AIDA</a>
+      <a href="https://en.wikipedia.org/wiki/AIDA_(marketing)" target="_blank">Wikipedia — AIDA Model</a>
+      <a href="https://www.masterclass.com/articles/aida-model-explained" target="_blank">MasterClass — AIDA Explained</a>
+      <div class="src-note">Dikembangkan oleh Elias St. Elmo Lewis (1898). Dipopulerkan Edward Strong dalam "The Psychology of Selling & Advertising" (1925). Salah satu framework tertua di dunia sales & marketing.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SLIDE 4: AIDA IN ACTION ═══ -->
+<section class="slide" id="slide-4">
+  <div class="animate-in">
+    <div class="section-label">Module 01 — AIDA in action</div>
+    <h2 class="section-title">AIDA dalam Chat Real</h2>
+    <p class="section-subtitle">Contoh penerapan AIDA di percakapan WhatsApp/DM.</p>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 40px;">
+      <div>
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text-muted); margin-bottom: 16px; letter-spacing: 2px;">SCENARIO: KURSUS BAHASA INGGRIS</div>
+        <div class="chat-demo">
+          <div><div class="chat-label">Customer</div><div class="chat-msg customer">Halo, mau tanya-tanya soal kursus bahasa Inggrisnya dong</div></div>
+          <div><div class="chat-label" style="text-align: right;">Sales — Awareness + Interest</div><div class="chat-msg sales">Halo kak! 😊 Kebetulan banget, bulan ini kita lagi ada program intensif yang hasilnya bisa kerasa dalam 3 bulan pertama. Boleh tau nih, kakak belajar bahasa Inggris ini untuk kebutuhan apa?</div></div>
+          <div><div class="chat-label">Customer</div><div class="chat-msg customer">Buat kerja sih, sering meeting sama orang luar</div></div>
+          <div><div class="chat-label" style="text-align: right;">Sales — Decision</div><div class="chat-msg sales">Wah perfect kak, banyak alumni kita yang awalnya sama — nervous meeting pakai English. Sekarang mereka udah confident presentasi di depan klien internasional. Program Business English kita emang didesain buat kebutuhan kayak kakak 💪</div></div>
+          <div><div class="chat-label" style="text-align: right;">Sales — Action</div><div class="chat-msg sales">Mau coba free trial class dulu kak? Bisa pilih jadwal yang pas. Kalau cocok, langsung lanjut. Kalau nggak, no worries 😊</div></div>
+        </div>
+      </div>
+      <div>
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text-muted); margin-bottom: 16px; letter-spacing: 2px;">BREAKDOWN</div>
+        <div class="timeline">
+          <div class="timeline-item"><div class="timeline-marker">A</div><div class="timeline-content"><h3>Awareness</h3><p>Sambut hangat + hook "program intensif, hasil 3 bulan" — langsung kasih alasan untuk stay.</p></div></div>
+          <div class="timeline-item"><div class="timeline-marker">I</div><div class="timeline-content"><h3>Interest</h3><p>Tanya kebutuhan spesifik → bikin mereka ngerasa "ini relevan buat gue."</p></div></div>
+          <div class="timeline-item"><div class="timeline-marker">D</div><div class="timeline-content"><h3>Decision</h3><p>Social proof (alumni sukses) + validasi kebutuhan mereka = keraguan berkurang.</p></div></div>
+          <div class="timeline-item"><div class="timeline-marker">A</div><div class="timeline-content"><h3>Action</h3><p>CTA low-risk: "Free trial, kalau nggak cocok no worries." — zero pressure, maximum conversion.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SLIDE 5: BANT ═══ -->
+<section class="slide" id="slide-5">
+  <div class="glow-orb glow-blue" style="top: -100px; left: 30%;"></div>
+  <div class="animate-in">
+    <div class="section-label">Module 02 — Qualification</div>
+    <h2 class="section-title">B.A.N.T</h2>
+    <p class="section-subtitle">Jangan buang waktu di leads yang nggak qualified. BANT bantu lu filter siapa yang serius, siapa yang cuma "mau tanya-tanya."</p>
+    <div class="bant-grid">
+      <div class="bant-card">
+        <div class="letter">B</div><h3>Budget</h3>
+        <p>Apakah mereka punya budget yang sesuai? Jangan takut ngomongin harga di awal — ini filter paling efektif.</p>
+        <div class="question">"Kakak ada budget range berapa untuk program ini?"</div>
+      </div>
+      <div class="bant-card">
+        <div class="letter">A</div><h3>Authority</h3>
+        <p>Apakah mereka decision maker? Atau masih harus minta izin ke orang lain? Pastikan lu ngobrol sama orang yang tepat.</p>
+        <div class="question">"Ini untuk kakak sendiri, atau perlu diskusi sama pihak lain dulu?"</div>
+      </div>
+      <div class="bant-card">
+        <div class="letter">N</div><h3>Need</h3>
+        <p>Seberapa urgent kebutuhan mereka? Semakin jelas pain point-nya, semakin gampang lu present solusinya.</p>
+        <div class="question">"Kalau boleh tau, tantangan terbesar kakak saat ini di bidang ini apa?"</div>
+      </div>
+      <div class="bant-card">
+        <div class="letter">T</div><h3>Timing</h3>
+        <p>Kapan mereka mau mulai? "Nanti aja" = never. Bantu mereka lihat urgency tanpa jadi pushy.</p>
+        <div class="question">"Rencananya mau mulai kapan kak? Kebetulan batch berikutnya start minggu depan."</div>
+      </div>
+    </div>
+    <div class="source-strip">
+      <div class="src-label">📚 Framework Origin</div>
+      <div class="src-note">BANT dikembangkan oleh IBM pada 1960-an sebagai metodologi lead qualification internal. Masih jadi standar industri dan fondasi framework modern seperti MEDDIC dan GPCTBA/C&I (HubSpot).</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SLIDE 6: BENEFIT vs FEATURE ═══ -->
+<section class="slide" id="slide-6">
+  <div class="animate-in">
+    <div class="section-label">Module 03 — Mindset Shift</div>
+    <h2 class="section-title">Stop Jualan Fitur.<br>Start Jualan <span style="color: var(--accent);">Alasan.</span></h2>
+    <p class="section-subtitle">Customer nggak peduli spek. Mereka peduli apa yang berubah di hidup mereka.</p>
+    <div class="compare-container">
+      <div class="compare-box bad">
+        <div class="icon">❌</div><h3>Feature-Based Selling</h3>
+        <div class="compare-item"><span class="marker">✗</span><span>"Kita punya 20 native teacher"</span></div>
+        <div class="compare-item"><span class="marker">✗</span><span>"Materi kita pakai Cambridge syllabus"</span></div>
+        <div class="compare-item"><span class="marker">✗</span><span>"Kelas kita small group, max 8 orang"</span></div>
+        <div class="compare-item"><span class="marker">✗</span><span>"Akses platform e-learning 24/7"</span></div>
+      </div>
+      <div class="compare-box good">
+        <div class="icon">✅</div><h3>Benefit-Based Selling</h3>
+        <div class="compare-item"><span class="marker">✓</span><span>"Kakak bisa confident ngomong English di meeting internasional"</span></div>
+        <div class="compare-item"><span class="marker">✓</span><span>"Kurikulum kita bikin progress kakak terukur setiap bulan"</span></div>
+        <div class="compare-item"><span class="marker">✓</span><span>"Kakak dapet perhatian penuh dari guru, bukan cuma jadi penonton"</span></div>
+        <div class="compare-item"><span class="marker">✓</span><span>"Bisa belajar kapan aja, nggak ganggu jadwal kerja kakak"</span></div>
+      </div>
+    </div>
+    <div class="quote-block">
+      <div class="text">"People don't buy drills. They buy holes in the wall."</div>
+      <div class="author">— Theodore Levitt, Harvard Business School</div>
+    </div>
+    <div class="source-strip">
+      <div class="src-label">📚 Concept Origin</div>
+      <div class="src-note">Theodore Levitt, "Marketing Imagination" (1983), Harvard Business School. Konsep ini juga dikenal sebagai "Jobs To Be Done" theory — dipopulerkan Clayton Christensen (HBS). Inti: customer beli solusi, bukan produk.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SLIDE 7: BENEFIT FORMULA ═══ -->
+<section class="slide" id="slide-7">
+  <div class="glow-orb glow-amber" style="bottom: -80px; right: 10%;"></div>
+  <div class="animate-in">
+    <div class="section-label">Module 03 — Benefit Formula</div>
+    <h2 class="section-title">Rumus Simpel:<br>Feature → So What? → Benefit</h2>
+    <p class="section-subtitle">Setiap fitur harus bisa dijawab "terus kenapa?" sampai ketemu value-nya buat customer.</p>
+    <div style="margin-top: 40px; max-width: 800px;">
+      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 28px; margin-bottom: 16px;">
+        <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+          <div style="background: rgba(239,68,68,0.1); padding: 10px 18px; border-radius: 10px; font-size: 0.9rem; border: 1px solid rgba(239,68,68,0.2);"><strong>Feature:</strong> Native teacher</div>
+          <div style="color: var(--text-muted); font-size: 1.2rem;">→</div>
+          <div style="background: rgba(245,158,11,0.1); padding: 10px 18px; border-radius: 10px; font-size: 0.9rem; border: 1px solid rgba(245,158,11,0.2);"><strong>So What?</strong> Pronunciation & accent alami</div>
+          <div style="color: var(--text-muted); font-size: 1.2rem;">→</div>
+          <div style="background: rgba(16,185,129,0.1); padding: 10px 18px; border-radius: 10px; font-size: 0.9rem; border: 1px solid rgba(16,185,129,0.2);"><strong>Benefit:</strong> "Kakak kedengeran natural dan profesional di meeting"</div>
+        </div>
+      </div>
+      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 28px; margin-bottom: 16px;">
+        <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+          <div style="background: rgba(239,68,68,0.1); padding: 10px 18px; border-radius: 10px; font-size: 0.9rem; border: 1px solid rgba(239,68,68,0.2);"><strong>Feature:</strong> Small group max 8</div>
+          <div style="color: var(--text-muted); font-size: 1.2rem;">→</div>
+          <div style="background: rgba(245,158,11,0.1); padding: 10px 18px; border-radius: 10px; font-size: 0.9rem; border: 1px solid rgba(245,158,11,0.2);"><strong>So What?</strong> Lebih banyak practice time</div>
+          <div style="color: var(--text-muted); font-size: 1.2rem;">→</div>
+          <div style="background: rgba(16,185,129,0.1); padding: 10px 18px; border-radius: 10px; font-size: 0.9rem; border: 1px solid rgba(16,185,129,0.2);"><strong>Benefit:</strong> "Progress kakak 3x lebih cepat dibanding kelas besar"</div>
+        </div>
+      </div>
+      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 28px;">
+        <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+          <div style="background: rgba(239,68,68,0.1); padding: 10px 18px; border-radius: 10px; font-size: 0.9rem; border: 1px solid rgba(239,68,68,0.2);"><strong>Feature:</strong> Flexible schedule</div>
+          <div style="color: var(--text-muted); font-size: 1.2rem;">→</div>
+          <div style="background: rgba(245,158,11,0.1); padding: 10px 18px; border-radius: 10px; font-size: 0.9rem; border: 1px solid rgba(245,158,11,0.2);"><strong>So What?</strong> Bisa sesuaikan jadwal kerja</div>
+          <div style="color: var(--text-muted); font-size: 1.2rem;">→</div>
+          <div style="background: rgba(16,185,129,0.1); padding: 10px 18px; border-radius: 10px; font-size: 0.9rem; border: 1px solid rgba(16,185,129,0.2);"><strong>Benefit:</strong> "Nggak perlu korbanin kerjaan buat upgrade skill"</div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top: 36px; padding: 20px 24px; background: rgba(245,158,11,0.06); border-radius: 12px; border-left: 3px solid var(--accent); max-width: 600px;">
+      <strong style="color: var(--accent);">💡 Pro Tip:</strong>
+      <span style="color: var(--text-secondary);"> Latih tim lu — setiap fitur produk HARUS punya benefit statement-nya. Bikin cheat sheet, drill sampai autopilot.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SLIDE 8: EXECUTION SKILLS ═══ -->
+<section class="slide" id="slide-8">
+  <div class="glow-orb glow-blue" style="top: 20%; left: -100px;"></div>
+  <div class="animate-in">
+    <div class="section-label">Module 04 — Tactical Execution</div>
+    <h2 class="section-title">The Execution<br><span style="color: var(--accent);">Game Changers</span></h2>
+    <p class="section-subtitle">Framework itu fondasi. Tapi execution skill yang bikin lu menang di lapangan.</p>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="num">SKILL — 01</div>
+        <h3>⚡ Fast Response</h3>
+        <p>Speed = trust. Di era online, orang chat 3-5 brand sekaligus. Yang bales duluan, menang duluan. Idealnya under 5 menit di jam kerja.</p>
+        <div class="stat">78% buyers pilih vendor yang respond pertama — Vendasta Research</div>
+      </div>
+      <div class="skill-card">
+        <div class="num">SKILL — 02</div>
+        <h3>⌨️ Typing Skill</h3>
+        <p>Kecepatan ngetik = kapasitas handle leads. Kalau lu bisa bales 2x lebih cepat, lu bisa handle 2x lebih banyak prospek dengan kualitas yang sama.</p>
+        <div class="stat">Contact dalam 5 menit = 21x conversion vs 30 menit — InsideSales.com</div>
+      </div>
+      <div class="skill-card">
+        <div class="num">SKILL — 03</div>
+        <h3>🎯 Personalisasi</h3>
+        <p>Jangan copy-paste template ke semua orang. Sebut nama mereka, refer ke kebutuhan spesifik mereka. Orang bisa ngerasain mana chat robot, mana chat manusia.</p>
+        <div class="stat">Personalized CTA = 202% better conversion — Instapage/HubSpot</div>
+      </div>
+      <div class="skill-card">
+        <div class="num">SKILL — 04</div>
+        <h3>🤝 Connection Building</h3>
+        <p>Sales bukan transaksi sekali jalan. Build genuine connection — tanya kabar, inget detail personal mereka. Repeat customer > new customer.</p>
+        <div class="stat">Acquire new customer 5-25x lebih mahal — Bain & Company / HBR</div>
+      </div>
+    </div>
+    <div class="source-strip">
+      <div class="src-label">📊 Data Sources</div>
+      <a href="https://www.leadangel.com/blog/operations/speed-to-lead-statistics/" target="_blank">LeadAngel — Speed to Lead</a>
+      <a href="https://www.chilipiper.com/article/speed-to-lead" target="_blank">Chili Piper — Response Time</a>
+      <a href="https://instapage.com/blog/personalization-statistics" target="_blank">Instapage — 70 Personalization Stats</a>
+      <a href="https://www.thetrask.com/blog/hyper-personalization-can-increase-your-conversion-rates-by-up-to-60" target="_blank">Trask — McKinsey/IDC Data</a>
+      <a href="https://www.yotpo.com/blog/cost-of-customer-acquisition-vs-retention/" target="_blank">Yotpo — Acquisition vs Retention</a>
+      <a href="https://verse.ai/blog/speed-to-lead-statistics" target="_blank">Verse.ai — 25 Speed to Lead Stats</a>
+      <div class="src-note">Retention stat "5x" berasal dari riset Bain & Company / Frederick Reichheld (HBR). Range aktual: 5-25x tergantung industri. Personalization 40% revenue uplift: McKinsey research.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SLIDE 9: COMMON MISTAKES ═══ -->
+<section class="slide" id="slide-9">
+  <div class="animate-in">
+    <div class="section-label">Module 05 — Watch Out</div>
+    <h2 class="section-title">5 Kesalahan Fatal<br>yang Bikin Leads Kabur</h2>
+    <div style="margin-top: 40px; max-width: 700px; display: flex; flex-direction: column; gap: 16px;">
+      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 24px 28px; display: flex; gap: 20px; align-items: flex-start;">
+        <div style="background: rgba(239,68,68,0.12); width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 800; color: #f87171; font-size: 1.1rem;">1</div>
+        <div><h3 style="font-size: 1rem; margin-bottom: 6px;">Hard Selling dari Chat Pertama</h3><p style="font-size: 0.88rem; color: var(--text-secondary);">Belum kenal, belum tau kebutuhan, udah bombardir harga dan promo. Ini kayak ngelamar orang yang baru ketemu di jalan.</p></div>
+      </div>
+      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 24px 28px; display: flex; gap: 20px; align-items: flex-start;">
+        <div style="background: rgba(239,68,68,0.12); width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 800; color: #f87171; font-size: 1.1rem;">2</div>
+        <div><h3 style="font-size: 1rem; margin-bottom: 6px;">Slow Response</h3><p style="font-size: 0.88rem; color: var(--text-secondary);">Bales chat 3 jam kemudian? Lead udah closing di tempat lain. Tiap 10 menit delay = conversion drop 400%. <em style="color: var(--text-muted); font-size: 0.78rem;">(LeadAngel)</em></p></div>
+      </div>
+      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 24px 28px; display: flex; gap: 20px; align-items: flex-start;">
+        <div style="background: rgba(239,68,68,0.12); width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 800; color: #f87171; font-size: 1.1rem;">3</div>
+        <div><h3 style="font-size: 1rem; margin-bottom: 6px;">Copy-Paste Template Tanpa Personalisasi</h3><p style="font-size: 0.88rem; color: var(--text-secondary);">"Halo kak, berikut brosur kami..." — ini bikin customer ngerasa cuma nomor di spreadsheet, bukan manusia.</p></div>
+      </div>
+      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 24px 28px; display: flex; gap: 20px; align-items: flex-start;">
+        <div style="background: rgba(239,68,68,0.12); width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 800; color: #f87171; font-size: 1.1rem;">4</div>
+        <div><h3 style="font-size: 1rem; margin-bottom: 6px;">Nggak Punya Follow-Up System</h3><p style="font-size: 0.88rem; color: var(--text-secondary);">Customer bilang "nanti ya" terus lu nggak follow up lagi? 80% sales happen setelah 5+ contacts. <em style="color: var(--text-muted); font-size: 0.78rem;">(GrowthList/SPOTIO)</em></p></div>
+      </div>
+      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 24px 28px; display: flex; gap: 20px; align-items: flex-start;">
+        <div style="background: rgba(239,68,68,0.12); width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 800; color: #f87171; font-size: 1.1rem;">5</div>
+        <div><h3 style="font-size: 1rem; margin-bottom: 6px;">Ngomong Fitur Doang, Zero Benefit</h3><p style="font-size: 0.88rem; color: var(--text-secondary);">Customer nggak peduli teknis. Mereka peduli "apa yang berubah di hidup gue setelah beli ini?"</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SLIDE 10: WRAP UP ═══ -->
+<section class="slide" id="slide-10">
+  <div class="glow-orb glow-amber" style="top: 30%; right: -50px;"></div>
+  <div class="glow-orb glow-blue" style="bottom: -50px; left: 20%;"></div>
+  <div class="animate-in">
+    <div class="section-label">Wrap Up — Your Action Plan</div>
+    <h2 class="section-title">Framework Tanpa Action =<br><span style="color: var(--accent);">Cuma Teori.</span></h2>
+    <p class="section-subtitle">Mulai dari yang bisa lu kontrol hari ini.</p>
+    <div class="takeaway-grid">
+      <div class="takeaway-item"><div class="emoji">🧠</div><h4>AIDA</h4><p>Map setiap chat flow lu ke 4 tahap AIDA. Evaluasi di tahap mana leads sering loss.</p></div>
+      <div class="takeaway-item"><div class="emoji">🎯</div><h4>BANT</h4><p>Kualifikasi dulu sebelum invest waktu. Nggak semua leads layak di-chase.</p></div>
+      <div class="takeaway-item"><div class="emoji">💡</div><h4>Benefit-First</h4><p>Rewrite semua script jualan lu. Ganti fitur → benefit. Latih sampai jadi autopilot.</p></div>
+      <div class="takeaway-item"><div class="emoji">⚡</div><h4>Speed & Skill</h4><p>Track response time lu. Latih typing. Personalisasi setiap chat. Consistency wins.</p></div>
+      <div class="takeaway-item"><div class="emoji">🤝</div><h4>Connection</h4><p>Build relationship, bukan cuma transaksi. People buy from people they trust.</p></div>
+    </div>
+    <div class="quote-block" style="margin-top: 50px;">
+      <div class="text">"Focus on what you can control. Execute the fundamentals. The results will follow."</div>
+      <div class="author">— Stoic Sales Philosophy</div>
+    </div>
+    <div class="cta-box" style="margin-top: 50px;">
+      <h3>Let's <span style="color: var(--accent);">Connect</span></h3>
+      <p>Ada pertanyaan? Mau diskusi lebih lanjut? Reach out!</p>
+      <div class="social-links">
+        <a href="#" class="social-link">📱 Instagram @mraflifebriansyah</a>
+        <a href="#" class="social-link">💼 LinkedIn — M Rafli Febriansyah</a>
+      </div>
+      <div style="margin-top: 20px; font-size: 0.82rem; color: var(--text-muted);">M Rafli Febriansyah — Sales Leader · Area Manager · AI Enthusiast</div>
+    </div>
+    <div class="source-strip" style="margin-top: 40px;">
+      <div class="src-label">📊 All Data Sources — Full Reference</div>
+      <a href="https://spotio.com/blog/sales-statistics/" target="_blank">SPOTIO Sales Stats 2026</a>
+      <a href="https://www.peaksalesrecruiting.com/blog/sales-follow-up-statistics/" target="_blank">Peak Sales Recruiting</a>
+      <a href="https://www.flowlu.com/blog/productivity/sales-statistics/" target="_blank">Flowlu Sales Stats</a>
+      <a href="https://martal.ca/speed-to-lead-lb/" target="_blank">Martal Speed to Lead</a>
+      <a href="https://rep.ai/blog/lead-response" target="_blank">Rep.ai Lead Response</a>
+      <a href="https://www.leadangel.com/blog/operations/speed-to-lead-statistics/" target="_blank">LeadAngel</a>
+      <a href="https://www.chilipiper.com/article/speed-to-lead" target="_blank">Chili Piper</a>
+      <a href="https://verse.ai/blog/speed-to-lead-statistics" target="_blank">Verse.ai</a>
+      <a href="https://instapage.com/blog/personalization-statistics" target="_blank">Instapage Personalization</a>
+      <a href="https://www.thetrask.com/blog/hyper-personalization-can-increase-your-conversion-rates-by-up-to-60" target="_blank">Trask/McKinsey/IDC</a>
+      <a href="https://www.yotpo.com/blog/cost-of-customer-acquisition-vs-retention/" target="_blank">Yotpo Retention</a>
+      <a href="https://www.oxfordreference.com/display/10.1093/oi/authority.20110803095432783" target="_blank">Oxford AIDA</a>
+      <a href="https://en.wikipedia.org/wiki/AIDA_(marketing)" target="_blank">Wikipedia AIDA</a>
+      <div class="src-note">Semua data verified per Februari 2026. Angka berasal dari riset GrowthList, Vendasta, Bain & Company, McKinsey, HBR, InsideSales.com, IDC, dan Instapage.</div>
+    </div>
+  </div>
+</section>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const navContainer = document.getElementById('navDots');
+const progressBar = document.getElementById('progressBar');
+const slideCounter = document.getElementById('slideCounter');
+const slideNames = ['Cover','Reality Check','AIDA','AIDA Demo','BANT','Benefit vs Feature','Benefit Formula','Execution Skills','Common Mistakes','Action Plan'];
+
+slideNames.forEach((name, i) => {
+  const dot = document.createElement('button');
+  dot.className = 'nav-dot';
+  dot.innerHTML = `<span class="tooltip">${name}</span>`;
+  dot.addEventListener('click', () => slides[i].scrollIntoView({ behavior: 'smooth' }));
+  navContainer.appendChild(dot);
+});
+
+const navDots = document.querySelectorAll('.nav-dot');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const idx = [...slides].indexOf(entry.target);
+      navDots.forEach((d, i) => d.classList.toggle('active', i === idx));
+      slideCounter.textContent = `${String(idx + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
+    }
+  });
+}, { threshold: 0.5 });
+slides.forEach(s => observer.observe(s));
+
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  progressBar.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100 + '%';
+});
+
+const animObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+}, { threshold: 0.15 });
+document.querySelectorAll('.animate-in').forEach(el => animObserver.observe(el));
+
+document.addEventListener('keydown', (e) => {
+  const current = [...slides].findIndex(s => { const r = s.getBoundingClientRect(); return r.top >= -100 && r.top <= window.innerHeight / 2; });
+  if ((e.key === 'ArrowDown' || e.key === ' ' || e.key === 'PageDown') && current < slides.length - 1) { e.preventDefault(); slides[current + 1].scrollIntoView({ behavior: 'smooth' }); }
+  if ((e.key === 'ArrowUp' || e.key === 'PageUp') && current > 0) { e.preventDefault(); slides[current - 1].scrollIntoView({ behavior: 'smooth' }); }
+});
+</script>
+</body>
+</html>
