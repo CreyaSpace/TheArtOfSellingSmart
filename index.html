@@ -7,19 +7,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg-primary: #0a0a0f;
-  --bg-card: #111118;
-  --bg-card-hover: #16161f;
-  --accent: #f59e0b;
-  --accent-glow: rgba(245, 158, 11, 0.15);
-  --accent-bright: #fbbf24;
-  --text-primary: #f1f1f4;
-  --text-secondary: #9d9db5;
-  --text-muted: #5a5a72;
-  --border: rgba(255,255,255,0.06);
-  --gradient-1: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
-  --gradient-2: linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 100%);
-  --gradient-3: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%);
+  --bg-primary: #f8fafd;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f0f5ff;
+  --accent: #2563eb;
+  --accent-glow: rgba(37, 99, 235, 0.12);
+  --accent-bright: #3b82f6;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --border: rgba(15, 23, 42, 0.08);
+  --gradient-1: linear-gradient(135deg, #2563eb 0%, #0ea5e9 100%);
+  --gradient-2: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+  --gradient-3: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -27,7 +27,7 @@
 html {
   scroll-behavior: smooth;
   scrollbar-width: thin;
-  scrollbar-color: var(--accent) var(--bg-primary);
+  scrollbar-color: var(--accent) #e2e8f0;
 }
 
 body {
@@ -42,7 +42,7 @@ body::before {
   content: '';
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.015'/%3E%3C/svg%3E");
   pointer-events: none;
   z-index: 9999;
 }
@@ -63,7 +63,7 @@ body::before {
 .nav-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--text-muted); border: none; cursor: pointer; transition: all 0.3s; position: relative; }
 .nav-dot.active { background: var(--accent); box-shadow: 0 0 12px var(--accent-glow); transform: scale(1.3); }
 .nav-dot:hover { background: var(--accent-bright); }
-.nav-dot .tooltip { position: absolute; right: 24px; top: 50%; transform: translateY(-50%); background: var(--bg-card); color: var(--text-primary); padding: 6px 14px; border-radius: 6px; font-size: 12px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s; border: 1px solid var(--border); }
+.nav-dot .tooltip { position: absolute; right: 24px; top: 50%; transform: translateY(-50%); background: #ffffff; color: var(--text-primary); padding: 6px 14px; border-radius: 6px; font-size: 12px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s; border: 1px solid var(--border); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
 .nav-dot:hover .tooltip { opacity: 1; }
 
 .progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: var(--gradient-1); z-index: 200; transition: width 0.3s ease; }
@@ -79,9 +79,9 @@ body::before {
 
 /* FRAMEWORK CARDS */
 .framework-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-top: 40px; }
-.fw-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 32px 28px; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; }
+.fw-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 32px 28px; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
 .fw-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gradient-1); opacity: 0; transition: opacity 0.3s; }
-.fw-card:hover { background: var(--bg-card-hover); transform: translateY(-4px); border-color: rgba(245, 158, 11, 0.2); }
+.fw-card:hover { background: var(--bg-card-hover); transform: translateY(-4px); border-color: rgba(37, 99, 235, 0.2); box-shadow: 0 8px 25px rgba(37,99,235,0.08); }
 .fw-card:hover::before { opacity: 1; }
 .fw-card .letter { font-family: 'Playfair Display', serif; font-size: 3.5rem; font-weight: 800; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; margin-bottom: 12px; }
 .fw-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; }
@@ -89,14 +89,14 @@ body::before {
 
 /* BANT CARDS */
 .bant-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-top: 40px; }
-.bant-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 32px 28px; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; }
+.bant-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 32px 28px; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
 .bant-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gradient-2); opacity: 0; transition: opacity 0.3s; }
-.bant-card:hover { background: var(--bg-card-hover); transform: translateY(-4px); border-color: rgba(14, 165, 233, 0.2); }
+.bant-card:hover { background: var(--bg-card-hover); transform: translateY(-4px); border-color: rgba(37, 99, 235, 0.2); box-shadow: 0 8px 25px rgba(37,99,235,0.08); }
 .bant-card:hover::before { opacity: 1; }
 .bant-card .letter { font-family: 'Playfair Display', serif; font-size: 3.5rem; font-weight: 800; background: var(--gradient-2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; margin-bottom: 12px; }
 .bant-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; }
 .bant-card p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; }
-.bant-card .question { margin-top: 14px; padding: 10px 14px; background: rgba(14, 165, 233, 0.06); border-left: 3px solid #0ea5e9; border-radius: 0 8px 8px 0; font-size: 0.85rem; color: #7dd3fc; font-style: italic; }
+.bant-card .question { margin-top: 14px; padding: 10px 14px; background: rgba(37, 99, 235, 0.06); border-left: 3px solid #2563eb; border-radius: 0 8px 8px 0; font-size: 0.85rem; color: #2563eb; font-style: italic; }
 
 /* COMPARISON */
 .compare-container { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 40px; max-width: 900px; }
@@ -114,18 +114,18 @@ body::before {
 
 /* SKILL CARDS */
 .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 40px; }
-.skill-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 32px 28px; transition: all 0.4s; position: relative; }
-.skill-card:hover { background: var(--bg-card-hover); transform: translateY(-3px); }
+.skill-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 32px 28px; transition: all 0.4s; position: relative; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+.skill-card:hover { background: var(--bg-card-hover); transform: translateY(-3px); box-shadow: 0 8px 25px rgba(37,99,235,0.06); }
 .skill-card .num { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--accent); margin-bottom: 14px; letter-spacing: 2px; }
 .skill-card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 12px; }
 .skill-card p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; }
-.skill-card .stat { margin-top: 18px; padding: 12px 16px; background: rgba(245, 158, 11, 0.06); border-radius: 10px; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--accent-bright); }
+.skill-card .stat { margin-top: 18px; padding: 12px 16px; background: rgba(37, 99, 235, 0.06); border-radius: 10px; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--accent); }
 
 /* CHAT SIM */
 .chat-demo { max-width: 500px; margin-top: 40px; display: flex; flex-direction: column; gap: 12px; }
 .chat-msg { max-width: 85%; padding: 14px 18px; border-radius: 18px; font-size: 0.9rem; line-height: 1.5; animation: fadeInUp 0.5s ease both; }
 .chat-msg.customer { background: var(--bg-card); border: 1px solid var(--border); align-self: flex-start; border-bottom-left-radius: 4px; color: var(--text-secondary); }
-.chat-msg.sales { background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.2); align-self: flex-end; border-bottom-right-radius: 4px; }
+.chat-msg.sales { background: rgba(37, 99, 235, 0.08); border: 1px solid rgba(37, 99, 235, 0.15); align-self: flex-end; border-bottom-right-radius: 4px; }
 .chat-label { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 4px; }
 
 /* QUOTE */
@@ -144,7 +144,7 @@ body::before {
 /* TAKEAWAYS */
 .takeaway-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 40px; }
 .takeaway-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 24px 22px; text-align: center; transition: all 0.3s; }
-.takeaway-item:hover { transform: translateY(-3px); border-color: rgba(245, 158, 11, 0.2); }
+.takeaway-item:hover { transform: translateY(-3px); border-color: rgba(37, 99, 235, 0.2); box-shadow: 0 6px 20px rgba(37,99,235,0.06); }
 .takeaway-item .emoji { font-size: 2rem; margin-bottom: 12px; }
 .takeaway-item h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; }
 .takeaway-item p { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5; }
@@ -155,7 +155,7 @@ body::before {
 .cta-box p { color: var(--text-secondary); margin-bottom: 24px; }
 .social-links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
 .social-link { padding: 10px 20px; border: 1px solid var(--border); border-radius: 10px; color: var(--text-secondary); text-decoration: none; font-size: 0.88rem; font-weight: 500; transition: all 0.3s; display: flex; align-items: center; gap: 8px; }
-.social-link:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-glow); }
+.social-link:hover { border-color: var(--accent); color: var(--accent); background: rgba(37,99,235,0.05); }
 
 /* BIG STAT */
 .big-stat { display: flex; gap: 48px; margin-top: 40px; flex-wrap: wrap; }
@@ -166,8 +166,8 @@ body::before {
 .source-strip {
   margin-top: 32px;
   padding: 16px 20px;
-  background: rgba(96, 165, 250, 0.04);
-  border: 1px solid rgba(96, 165, 250, 0.1);
+  background: rgba(37, 99, 235, 0.04);
+  border: 1px solid rgba(37, 99, 235, 0.1);
   border-radius: 12px;
   max-width: 800px;
 }
@@ -176,11 +176,11 @@ body::before {
   font-size: 0.65rem;
   text-transform: uppercase;
   letter-spacing: 2px;
-  color: #60a5fa;
+  color: var(--accent);
   margin-bottom: 8px;
 }
 .source-strip a {
-  color: #7dd3fc;
+  color: #2563eb;
   text-decoration: none;
   font-size: 0.78rem;
   line-height: 2;
@@ -188,7 +188,7 @@ body::before {
   margin-right: 6px;
   transition: color 0.2s;
 }
-.source-strip a:hover { color: #bae6fd; text-decoration: underline; }
+.source-strip a:hover { color: #1d4ed8; text-decoration: underline; }
 .source-strip a::after { content: ' ↗'; font-size: 0.65rem; }
 .source-strip .src-note {
   font-size: 0.72rem;
@@ -198,8 +198,8 @@ body::before {
 }
 
 /* GLOW */
-.glow-orb { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.08; pointer-events: none; }
-.glow-amber { background: #f59e0b; width: 400px; height: 400px; }
+.glow-orb { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.06; pointer-events: none; }
+.glow-amber { background: #2563eb; width: 400px; height: 400px; }
 .glow-blue { background: #0ea5e9; width: 350px; height: 350px; }
 
 /* ANIM */
@@ -321,22 +321,22 @@ body::before {
     <p class="section-subtitle">Contoh penerapan AIDA di percakapan WhatsApp/DM.</p>
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 40px;">
       <div>
-        <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text-muted); margin-bottom: 16px; letter-spacing: 2px;">SCENARIO: KURSUS BAHASA INGGRIS</div>
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text-muted); margin-bottom: 16px; letter-spacing: 2px;">SCENARIO: COWORKING SPACE / PRIVATE OFFICE</div>
         <div class="chat-demo">
-          <div><div class="chat-label">Customer</div><div class="chat-msg customer">Halo, mau tanya-tanya soal kursus bahasa Inggrisnya dong</div></div>
-          <div><div class="chat-label" style="text-align: right;">Sales — Awareness + Interest</div><div class="chat-msg sales">Halo kak! 😊 Kebetulan banget, bulan ini kita lagi ada program intensif yang hasilnya bisa kerasa dalam 3 bulan pertama. Boleh tau nih, kakak belajar bahasa Inggris ini untuk kebutuhan apa?</div></div>
-          <div><div class="chat-label">Customer</div><div class="chat-msg customer">Buat kerja sih, sering meeting sama orang luar</div></div>
-          <div><div class="chat-label" style="text-align: right;">Sales — Decision</div><div class="chat-msg sales">Wah perfect kak, banyak alumni kita yang awalnya sama — nervous meeting pakai English. Sekarang mereka udah confident presentasi di depan klien internasional. Program Business English kita emang didesain buat kebutuhan kayak kakak 💪</div></div>
-          <div><div class="chat-label" style="text-align: right;">Sales — Action</div><div class="chat-msg sales">Mau coba free trial class dulu kak? Bisa pilih jadwal yang pas. Kalau cocok, langsung lanjut. Kalau nggak, no worries 😊</div></div>
+          <div><div class="chat-label">Customer</div><div class="chat-msg customer">Halo, mau tanya-tanya soal coworking space nya dong</div></div>
+          <div><div class="chat-label" style="text-align: right;">Sales — Awareness + Interest</div><div class="chat-msg sales">Halo kak! 😊 Kebetulan banget, bulan ini kita lagi ada promo spesial untuk paket bulanan. Boleh tau nih, kakak rencana pakai untuk kerja sendiri atau sama tim?</div></div>
+          <div><div class="chat-label">Customer</div><div class="chat-msg customer">Buat kerja sama tim kecil sih, 4 orang. Kita startup baru jalan</div></div>
+          <div><div class="chat-label" style="text-align: right;">Sales — Decision</div><div class="chat-msg sales">Wah cocok banget kak! Banyak startup yang awalnya sama — butuh ruang kerja profesional tapi belum siap sewa ruko. Sekarang mereka udah scale up dari sini, ada yang udah punya 10+ karyawan. Private Office kita udah include WiFi cepat, meeting room, dan akses 7 hari seminggu 💪</div></div>
+          <div><div class="chat-label" style="text-align: right;">Sales — Action</div><div class="chat-msg sales">Mau coba visit dulu kak? Bisa lihat ruangannya langsung, gratis. Kalau cocok, langsung mulai. Kalau belum, no worries 😊</div></div>
         </div>
       </div>
       <div>
         <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text-muted); margin-bottom: 16px; letter-spacing: 2px;">BREAKDOWN</div>
         <div class="timeline">
-          <div class="timeline-item"><div class="timeline-marker">A</div><div class="timeline-content"><h3>Awareness</h3><p>Sambut hangat + hook "program intensif, hasil 3 bulan" — langsung kasih alasan untuk stay.</p></div></div>
-          <div class="timeline-item"><div class="timeline-marker">I</div><div class="timeline-content"><h3>Interest</h3><p>Tanya kebutuhan spesifik → bikin mereka ngerasa "ini relevan buat gue."</p></div></div>
-          <div class="timeline-item"><div class="timeline-marker">D</div><div class="timeline-content"><h3>Decision</h3><p>Social proof (alumni sukses) + validasi kebutuhan mereka = keraguan berkurang.</p></div></div>
-          <div class="timeline-item"><div class="timeline-marker">A</div><div class="timeline-content"><h3>Action</h3><p>CTA low-risk: "Free trial, kalau nggak cocok no worries." — zero pressure, maximum conversion.</p></div></div>
+          <div class="timeline-item"><div class="timeline-marker">A</div><div class="timeline-content"><h3>Awareness</h3><p>Sambut hangat + hook "promo spesial paket bulanan" — langsung kasih alasan untuk stay.</p></div></div>
+          <div class="timeline-item"><div class="timeline-marker">I</div><div class="timeline-content"><h3>Interest</h3><p>Tanya kebutuhan spesifik (kerja sendiri vs tim?) → bikin mereka ngerasa "ini relevan buat gue."</p></div></div>
+          <div class="timeline-item"><div class="timeline-marker">D</div><div class="timeline-content"><h3>Decision</h3><p>Social proof (startup lain yang scale up dari sini) + fitur relevan = keraguan berkurang.</p></div></div>
+          <div class="timeline-item"><div class="timeline-marker">A</div><div class="timeline-content"><h3>Action</h3><p>CTA low-risk: "Visit gratis, kalau belum cocok no worries." — zero pressure, maximum conversion.</p></div></div>
         </div>
       </div>
     </div>
@@ -388,17 +388,17 @@ body::before {
     <div class="compare-container">
       <div class="compare-box bad">
         <div class="icon">❌</div><h3>Feature-Based Selling</h3>
-        <div class="compare-item"><span class="marker">✗</span><span>"Kita punya 20 native teacher"</span></div>
-        <div class="compare-item"><span class="marker">✗</span><span>"Materi kita pakai Cambridge syllabus"</span></div>
-        <div class="compare-item"><span class="marker">✗</span><span>"Kelas kita small group, max 8 orang"</span></div>
-        <div class="compare-item"><span class="marker">✗</span><span>"Akses platform e-learning 24/7"</span></div>
+        <div class="compare-item"><span class="marker">✗</span><span>"WiFi kita 100 Mbps"</span></div>
+        <div class="compare-item"><span class="marker">✗</span><span>"Ada meeting room kapasitas 10 orang"</span></div>
+        <div class="compare-item"><span class="marker">✗</span><span>"Buka 7 hari seminggu"</span></div>
+        <div class="compare-item"><span class="marker">✗</span><span>"Lokasi di Summarecon Bekasi"</span></div>
       </div>
       <div class="compare-box good">
         <div class="icon">✅</div><h3>Benefit-Based Selling</h3>
-        <div class="compare-item"><span class="marker">✓</span><span>"Kakak bisa confident ngomong English di meeting internasional"</span></div>
-        <div class="compare-item"><span class="marker">✓</span><span>"Kurikulum kita bikin progress kakak terukur setiap bulan"</span></div>
-        <div class="compare-item"><span class="marker">✓</span><span>"Kakak dapet perhatian penuh dari guru, bukan cuma jadi penonton"</span></div>
-        <div class="compare-item"><span class="marker">✓</span><span>"Bisa belajar kapan aja, nggak ganggu jadwal kerja kakak"</span></div>
+        <div class="compare-item"><span class="marker">✓</span><span>"Video call kakak nggak bakal lag atau putus-putus lagi"</span></div>
+        <div class="compare-item"><span class="marker">✓</span><span>"Kakak bisa meeting klien di ruang profesional, nggak perlu cari kafe"</span></div>
+        <div class="compare-item"><span class="marker">✓</span><span>"Mau kerja weekend juga bisa, nggak perlu nunggu Senin"</span></div>
+        <div class="compare-item"><span class="marker">✓</span><span>"Klien kakak lebih percaya karena alamat bisnis di kawasan premium"</span></div>
       </div>
     </div>
     <div class="quote-block">
@@ -422,33 +422,33 @@ body::before {
     <div style="margin-top: 40px; max-width: 800px;">
       <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 28px; margin-bottom: 16px;">
         <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
-          <div style="background: rgba(239,68,68,0.1); padding: 10px 18px; border-radius: 10px; font-size: 0.9rem; border: 1px solid rgba(239,68,68,0.2);"><strong>Feature:</strong> Native teacher</div>
+          <div style="background: rgba(239,68,68,0.1); padding: 10px 18px; border-radius: 10px; font-size: 0.9rem; border: 1px solid rgba(239,68,68,0.2);"><strong>Feature:</strong> WiFi 100 Mbps</div>
           <div style="color: var(--text-muted); font-size: 1.2rem;">→</div>
-          <div style="background: rgba(245,158,11,0.1); padding: 10px 18px; border-radius: 10px; font-size: 0.9rem; border: 1px solid rgba(245,158,11,0.2);"><strong>So What?</strong> Pronunciation & accent alami</div>
+          <div style="background: rgba(37,99,235,0.08); padding: 10px 18px; border-radius: 10px; font-size: 0.9rem; border: 1px solid rgba(37,99,235,0.15);"><strong>So What?</strong> Video call & upload lancar</div>
           <div style="color: var(--text-muted); font-size: 1.2rem;">→</div>
-          <div style="background: rgba(16,185,129,0.1); padding: 10px 18px; border-radius: 10px; font-size: 0.9rem; border: 1px solid rgba(16,185,129,0.2);"><strong>Benefit:</strong> "Kakak kedengeran natural dan profesional di meeting"</div>
+          <div style="background: rgba(16,185,129,0.1); padding: 10px 18px; border-radius: 10px; font-size: 0.9rem; border: 1px solid rgba(16,185,129,0.2);"><strong>Benefit:</strong> "Meeting online kakak jadi smooth, nggak malu lagi karena lag"</div>
         </div>
       </div>
       <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 28px; margin-bottom: 16px;">
         <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
-          <div style="background: rgba(239,68,68,0.1); padding: 10px 18px; border-radius: 10px; font-size: 0.9rem; border: 1px solid rgba(239,68,68,0.2);"><strong>Feature:</strong> Small group max 8</div>
+          <div style="background: rgba(239,68,68,0.1); padding: 10px 18px; border-radius: 10px; font-size: 0.9rem; border: 1px solid rgba(239,68,68,0.2);"><strong>Feature:</strong> Meeting room include</div>
           <div style="color: var(--text-muted); font-size: 1.2rem;">→</div>
-          <div style="background: rgba(245,158,11,0.1); padding: 10px 18px; border-radius: 10px; font-size: 0.9rem; border: 1px solid rgba(245,158,11,0.2);"><strong>So What?</strong> Lebih banyak practice time</div>
+          <div style="background: rgba(37,99,235,0.08); padding: 10px 18px; border-radius: 10px; font-size: 0.9rem; border: 1px solid rgba(37,99,235,0.15);"><strong>So What?</strong> Nggak perlu booking & bayar terpisah</div>
           <div style="color: var(--text-muted); font-size: 1.2rem;">→</div>
-          <div style="background: rgba(16,185,129,0.1); padding: 10px 18px; border-radius: 10px; font-size: 0.9rem; border: 1px solid rgba(16,185,129,0.2);"><strong>Benefit:</strong> "Progress kakak 3x lebih cepat dibanding kelas besar"</div>
+          <div style="background: rgba(16,185,129,0.1); padding: 10px 18px; border-radius: 10px; font-size: 0.9rem; border: 1px solid rgba(16,185,129,0.2);"><strong>Benefit:</strong> "Klien datang mendadak? Tinggal pakai, nggak ribet"</div>
         </div>
       </div>
       <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 28px;">
         <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
-          <div style="background: rgba(239,68,68,0.1); padding: 10px 18px; border-radius: 10px; font-size: 0.9rem; border: 1px solid rgba(239,68,68,0.2);"><strong>Feature:</strong> Flexible schedule</div>
+          <div style="background: rgba(239,68,68,0.1); padding: 10px 18px; border-radius: 10px; font-size: 0.9rem; border: 1px solid rgba(239,68,68,0.2);"><strong>Feature:</strong> Sewa bulanan</div>
           <div style="color: var(--text-muted); font-size: 1.2rem;">→</div>
-          <div style="background: rgba(245,158,11,0.1); padding: 10px 18px; border-radius: 10px; font-size: 0.9rem; border: 1px solid rgba(245,158,11,0.2);"><strong>So What?</strong> Bisa sesuaikan jadwal kerja</div>
+          <div style="background: rgba(37,99,235,0.08); padding: 10px 18px; border-radius: 10px; font-size: 0.9rem; border: 1px solid rgba(37,99,235,0.15);"><strong>So What?</strong> Fleksibel, tanpa kontrak tahunan</div>
           <div style="color: var(--text-muted); font-size: 1.2rem;">→</div>
-          <div style="background: rgba(16,185,129,0.1); padding: 10px 18px; border-radius: 10px; font-size: 0.9rem; border: 1px solid rgba(16,185,129,0.2);"><strong>Benefit:</strong> "Nggak perlu korbanin kerjaan buat upgrade skill"</div>
+          <div style="background: rgba(16,185,129,0.1); padding: 10px 18px; border-radius: 10px; font-size: 0.9rem; border: 1px solid rgba(16,185,129,0.2);"><strong>Benefit:</strong> "Bisnis kakak bisa scale up atau down tanpa resiko rugi kontrak"</div>
         </div>
       </div>
     </div>
-    <div style="margin-top: 36px; padding: 20px 24px; background: rgba(245,158,11,0.06); border-radius: 12px; border-left: 3px solid var(--accent); max-width: 600px;">
+    <div style="margin-top: 36px; padding: 20px 24px; background: rgba(37,99,235,0.05); border-radius: 12px; border-left: 3px solid var(--accent); max-width: 600px;">
       <strong style="color: var(--accent);">💡 Pro Tip:</strong>
       <span style="color: var(--text-secondary);"> Latih tim lu — setiap fitur produk HARUS punya benefit statement-nya. Bikin cheat sheet, drill sampai autopilot.</span>
     </div>
